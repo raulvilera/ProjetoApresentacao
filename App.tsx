@@ -121,107 +121,14 @@ const App: React.FC = () => {
   }, []); // Sem dependência de [view] para evitar loop
 
   useEffect(() => {
-    const loadStudentsData = async (forceSync = false) => {
-      let finalStudents: Student[] = [];
-      let loadedFromSupabase = false;
+    const loadStudentsData = async () => {
+      console.log('🛡️ [DEMO] Forçando carregamento de dados mock para modo apresentação');
 
-      // 1. Tentar carregar do Supabase primeiro (Fonte Primária) - COM PAGINAÇÃO
-      if (isSupabaseConfigured && supabase && !forceSync) {
-        try {
-          let allData: any[] = [];
-          let errorOccurred = false;
-          let from = 0;
-          const PAGE_SIZE = 1000;
-          let hasMore = true;
+      // Limpar caches antigos se existirem
+      localStorage.removeItem('PEP_students_cache');
 
-          while (hasMore) {
-            const { data, error } = await supabase
-              .from('students')
-              .select('*')
-              .order('nome')
-              .range(from, from + PAGE_SIZE - 1);
-
-            if (error) {
-              console.error('⚠️ Supabase Error fetching students:', error);
-              errorOccurred = true;
-              break;
-            }
-
-            if (data && data.length > 0) {
-              allData = [...allData, ...data];
-              if (data.length < PAGE_SIZE) {
-                hasMore = false;
-              } else {
-                from += PAGE_SIZE;
-              }
-            } else {
-              hasMore = false;
-            }
-          }
-
-          if (!errorOccurred && allData.length > 0) {
-            finalStudents = allData.map(s => ({
-              id: s.id,
-              nome: s.nome,
-              ra: s.ra,
-              turma: s.turma
-            }));
-            loadedFromSupabase = true;
-            console.log(`✅ Supabase: Total de ${finalStudents.length} alunos carregados (Paginado)`);
-          }
-        } catch (e) {
-          console.warn('⚠️ Supabase: Falha ao carregar alunos:', e);
-        }
-      }
-
-      // 2. Se falhar Supabase ou for Sincronização Forçada, carregar do Google Sheets
-      if (!loadedFromSupabase || forceSync) {
-        try {
-          const sheetsStudents = await loadStudentsFromSheets();
-          if (sheetsStudents.length > 0) {
-            finalStudents = sheetsStudents;
-            console.log(`✅ Google Sheets: Carregados ${sheetsStudents.length} alunos`);
-
-            // Sincronizar com Supabase se houver conexão
-            if (isSupabaseConfigured && supabase) {
-              try {
-                // Limpar tabela students para evitar duplicatas (usando filtro 'neq' em campo garantido ou delete all se RLS permitir)
-                // Nota: No Supabase, delete sem filtro pode ser bloqueado dependendo da config.
-                // Mas aqui estamos limpando tudo para repopular.
-                await supabase.from('students').delete().filter('id', 'neq', '00000000-0000-0000-0000-000000000000');
-
-                // Inserir em lotes para evitar problemas de payload grande
-                const CHUNK_SIZE = 500;
-                for (let i = 0; i < sheetsStudents.length; i += CHUNK_SIZE) {
-                  const chunk = sheetsStudents.slice(i, i + CHUNK_SIZE);
-                  const studentsToInsert = chunk.map((s, index) => ({
-                    id: `synced-${Date.now()}-${i + index}`,
-                    nome: s.nome,
-                    ra: s.ra,
-                    turma: s.turma
-                  }));
-
-                  const { error } = await supabase.from('students').insert(studentsToInsert);
-                  if (error) {
-                    console.error(`❌ Erro ao sincronizar lote ${i / CHUNK_SIZE}:`, error.message);
-                  }
-                }
-                console.log('✅ Supabase: Sincronização completa concluída');
-              } catch (syncError) {
-                console.warn('⚠️ Supabase: Erro crítico na sincronização:', syncError);
-              }
-            }
-          }
-        } catch (error) {
-          console.warn('⚠️ Google Sheets: Falha ao carregar');
-        }
-      }
-
-      // 4. Último fallback: Dados locais
-      if (finalStudents.length === 0) {
-        finalStudents = STUDENTS_DB;
-        console.log(`⚠️ Local: Usando ${STUDENTS_DB.length} alunos (studentsData.ts)`);
-      }
+      const finalStudents = STUDENTS_DB;
+      console.log(`✅ Local: Usando ${STUDENTS_DB.length} alunos (studentsData.ts)`);
 
       setStudents(finalStudents);
 
@@ -259,19 +166,8 @@ const App: React.FC = () => {
     (window as any).refreshStudents = (sync = false) => loadStudentsData(sync);
   }, [user]);
 
-  const handleSyncStudents = async () => {
-    setLoading(true);
-    try {
-      // Re-executa loadStudentsData com força de sincronização
-      const loadFn = (window as any).refreshStudents;
-      if (loadFn) await loadFn(true);
-      alert("Sincronização com Google Sheets concluída com sucesso!");
-    } catch (err) {
-      alert("Erro ao sincronizar alunos.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Sincronização desabilitada na versão demo
+  const handleSyncStudents = async () => { };
 
   useEffect(() => {
     if (user) loadCloudIncidents();
@@ -472,9 +368,9 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="h-screen w-full bg-[#000d1a] flex flex-col items-center justify-center">
-        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">Portal Plataforma Pro 2026...</p>
+      <div className="h-screen w-full bg-[#1e3a8a] flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">Carregando Demonstração...</p>
       </div>
     );
   }
@@ -528,12 +424,12 @@ const App: React.FC = () => {
   const shouldShowGestorView = hasDualAccess ? viewMode === 'gestor' : user?.role === 'gestor';
 
   return (
-    <div className="relative min-h-screen bg-[#001a35]">
+    <div className="relative min-h-screen bg-[#1e3a8a]">
       {/* Botão de alternância para usuários com acesso dual */}
       {hasDualAccess && (
         <button
           onClick={handleToggleView}
-          className="fixed top-4 right-4 z-50 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white px-6 py-3 rounded-full font-black text-xs uppercase tracking-wider shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+          className="fixed top-4 right-4 z-50 bg-gradient-to-r from-blue-400 to-indigo-600 hover:from-blue-500 hover:to-indigo-700 text-white px-6 py-3 rounded-full font-black text-xs uppercase tracking-wider shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 border border-white/20"
           title={`Alternar para área ${viewMode === 'gestor' ? 'do professor' : 'da gestão'}`}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

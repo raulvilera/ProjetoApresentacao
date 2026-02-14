@@ -229,47 +229,32 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
   }, [incidents, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-[#001a35] font-sans pb-12 overflow-x-hidden">
-      <header className="bg-[#002b5c] text-white px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-center border-b border-white/10 sticky top-0 z-[50] shadow-xl gap-2 sm:gap-0">
+    <div className="min-h-screen bg-[#1e3a8a] font-sans pb-12 overflow-x-hidden">
+      <header className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
         <div className="flex flex-col items-center sm:items-start">
-          <h1 className="text-xs sm:text-sm font-black uppercase tracking-widest text-teal-400 text-center sm:text-left">Gestão Plataforma Escolar Pro 2026</h1>
-          <p className="text-[8px] sm:text-[9px] font-bold text-white/40 uppercase">Painel de Controle Administrativo</p>
+          <h1 className="text-sm font-black uppercase text-blue-300">Gestão Escolar Pro</h1>
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Painel de Controle e Devolutivas</p>
         </div>
         <div className="flex gap-4 sm:gap-6 items-center">
-          <div className="hidden md:flex flex-col items-end">
-            <span className="text-[10px] font-black uppercase">{user.email}</span>
-            <span className="text-[8px] font-bold text-orange-500 uppercase">Nível: Administrador</span>
-          </div>
-          <button onClick={onLogout} className="bg-white hover:bg-red-50 text-[#002b5c] px-4 sm:px-5 py-1.5 sm:py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95">Sair</button>
+          <span className="text-[10px] font-bold text-white/70">{user.email}</span>
+          <button onClick={onLogout} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-1.5 rounded-xl text-[10px] font-black uppercase shadow-lg transition-all">Sair</button>
           <button
             onClick={() => { setShowProfessorsModal(true); fetchProfessors(); }}
-            className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-1.5 sm:py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95 flex items-center gap-2"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 sm:py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95 flex items-center gap-2 border border-white/20"
           >
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" /></svg>
             Professores
           </button>
-          {onSyncStudents && (
-            <button
-              onClick={onSyncStudents}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 sm:py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95 flex items-center gap-2"
-              title="Sincronizar alunos do Google Sheets para o Supabase"
-            >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Sincronizar Alunos
-            </button>
-          )}
         </div>
       </header>
 
       <main className="max-w-[1700px] mx-auto mt-6 sm:mt-8 px-4 sm:px-6 space-y-8 sm:space-y-10">
         <div className="bg-white rounded-[32px] shadow-2xl overflow-hidden border border-white/10">
-          <div className="bg-[#004a99] py-3 text-center border-b border-white/10">
+          <div className="bg-[#0d47a1] py-3 text-center border-b border-white/10">
             <h2 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">EFETUAR NOVO REGISTRO ADMINISTRATIVO</h2>
           </div>
 
-          <div className="p-6 sm:p-10 bg-gradient-to-br from-[#115e59] via-[#14b8a6] to-[#ea580c]">
+          <div className="p-6 sm:p-10 bg-gradient-to-br from-[#1e3a8a] to-[#0d47a1]">
             <form onSubmit={handleSave} className="space-y-6 sm:space-y-8">
               <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-end">
                 <div className="flex flex-col gap-2 w-full lg:w-48">
@@ -370,32 +355,30 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="w-full sm:w-auto px-10 sm:px-20 py-5 sm:py-6 bg-gradient-to-r from-[#004a99] to-[#14b8a6] hover:scale-[1.02] text-white font-black text-[10px] sm:text-xs uppercase tracking-[0.25em] rounded-2xl shadow-xl transition-all border-b-8 border-blue-900 active:translate-y-1 active:border-b-0"
+                  className="w-auto px-16 py-5 bg-gradient-to-b from-[#42a5f5] to-[#1e88e5] hover:from-[#1e88e5] hover:to-[#1565c0] text-white font-black text-[11px] uppercase tracking-widest rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 border-b-4 border-[#0d47a1]"
                 >
-                  {isSaving ? 'PROCESSANDO...' : 'FINALIZAR E SALVAR REGISTRO'}
+                  {isSaving ? 'Gravando...' : 'Lançar Registro'}
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        <section className="bg-white rounded-[32px] shadow-2xl overflow-hidden border border-gray-100">
-          <div className="px-6 sm:px-10 py-6 bg-[#002b5c] text-white flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col">
-                <h3 className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest">Painel de Registros (Últimos 30 dias)</h3>
-                <button
-                  onClick={() => setShowPermanentSearch(true)}
-                  className="text-[9px] text-teal-400 font-black uppercase text-left hover:underline flex items-center gap-1 group"
-                >
-                  Ir para Histórico Permanente
-                  <svg className="w-2.5 h-2.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              <span className="bg-teal-500 text-white text-[8px] sm:text-[9px] px-3 py-1 rounded-full font-black uppercase whitespace-nowrap">{history.length} Recentes</span>
+        <section className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+          <div className="px-6 py-4 bg-[#0d47a1] text-white flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex flex-col">
+              <h3 className="text-[10px] font-black uppercase tracking-widest">Feed de Ocorrências e Devolutivas</h3>
+              <button
+                onClick={() => setShowPermanentSearch(true)}
+                className="text-[9px] text-blue-300 font-black uppercase text-left hover:underline flex items-center gap-1 group"
+              >
+                Buscar no Histórico Permanente
+                <svg className="w-2.5 h-2.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
+            <span className="bg-blue-500 text-white text-[8px] sm:text-[9px] px-3 py-1 rounded-full font-black uppercase whitespace-nowrap">{history.length} Recentes</span>
             <div className="flex items-center gap-3 w-full md:w-auto">
               <div className="relative w-full md:w-64">
                 <input
@@ -409,7 +392,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
               </div>
               <button
                 onClick={onOpenSearch}
-                className="bg-teal-500 hover:bg-teal-600 text-white p-2.5 rounded-xl transition-all shadow-lg flex items-center gap-2"
+                className="bg-blue-500 hover:bg-blue-600 text-white p-2.5 rounded-xl transition-all shadow-lg flex items-center gap-2"
                 title="Busca Profunda na Planilha"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -441,7 +424,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                       <div className="flex flex-col gap-1">
                         <StatusBadge status={inc.status} size="small" />
                         {inc.lastViewedAt && (
-                          <span className="text-[7px] font-bold text-teal-600 uppercase">Visualizado</span>
+                          <span className="text-[7px] font-bold text-blue-600 uppercase">Visualizado</span>
                         )}
                       </div>
                     </td>
@@ -461,7 +444,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                     <td className="p-4 max-sm truncate text-gray-600 italic">
                       <div>{inc.description}</div>
                       {inc.managementFeedback && (
-                        <div className="mt-2 p-2 bg-teal-50 border-l-2 border-teal-500 text-teal-800 font-bold text-[8px]">
+                        <div className="mt-2 p-2 bg-blue-50 border-l-2 border-blue-500 text-blue-800 font-bold text-[8px]">
                           DEVOLUTIVA: {inc.managementFeedback}
                         </div>
                       )}
@@ -476,7 +459,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                       <div className="flex justify-center gap-2">
                         <button
                           onClick={() => openUpdateModal(inc)}
-                          className="p-2 bg-teal-50 text-teal-600 rounded-lg hover:bg-teal-600 hover:text-white transition-all"
+                          className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all"
                           title="Atualizar Status / Devolutiva"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
@@ -500,9 +483,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
       {isUpdatingStatus && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in shadow-2xl">
           <div className="bg-white w-full max-w-lg rounded-[32px] overflow-hidden flex flex-col border border-white/20">
-            <div className="bg-[#002b5c] p-6 text-center border-b-4 border-teal-500">
+            <div className="bg-[#0d47a1] p-6 text-center border-b-4 border-blue-500">
               <h3 className="text-white font-black text-xs uppercase tracking-[0.2em]">Sinalizar Estágio da Ocorrência</h3>
-              <p className="text-teal-400 text-[9px] font-bold mt-1 uppercase">{isUpdatingStatus.studentName}</p>
+              <p className="text-blue-400 text-[9px] font-bold mt-1 uppercase">{isUpdatingStatus.studentName}</p>
             </div>
 
             <div className="p-8 space-y-6">
@@ -511,7 +494,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value as any)}
-                  className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-2xl text-[11px] font-black outline-none focus:ring-2 focus:ring-teal-500 transition-all text-black"
+                  className="w-full h-12 px-4 bg-gray-50 border border-gray-200 rounded-2xl text-[11px] font-black outline-none focus:ring-2 focus:ring-blue-500 transition-all text-black"
                 >
                   <option value="Pendente">🔴 PENDENTE</option>
                   <option value="Em Análise">🟡 EM ANÁLISE</option>
@@ -526,7 +509,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                   onChange={(e) => setFeedback(e.target.value)}
                   rows={4}
                   placeholder="Descreva o estágio atual ou a resolução da ocorrência..."
-                  className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-[11px] font-bold outline-none focus:ring-2 focus:ring-teal-500 transition-all text-black uppercase"
+                  className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-[11px] font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-black uppercase"
                 ></textarea>
               </div>
 
@@ -539,7 +522,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                 </button>
                 <button
                   onClick={handleUpdateStatus}
-                  className="flex-1 py-4 bg-teal-500 text-white font-black text-[10px] uppercase rounded-2xl hover:bg-teal-600 transition-all shadow-md active:scale-95"
+                  className="flex-1 py-4 bg-blue-500 text-white font-black text-[10px] uppercase rounded-2xl hover:bg-blue-600 transition-all shadow-md active:scale-95"
                 >
                   Salvar Devolutiva
                 </button>
@@ -553,7 +536,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
       {showPermanentSearch && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in shadow-2xl">
           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[40px] overflow-hidden flex flex-col border border-white/20">
-            <div className="bg-[#002b5c] p-6 text-center shrink-0 border-b-4 border-orange-500">
+            <div className="bg-[#0d47a1] p-6 text-center shrink-0 border-b-4 border-orange-500">
               <h3 className="text-white font-black text-xs uppercase tracking-[0.2em]">Busca Criteriosa no Histórico Permanente</h3>
               <p className="text-orange-400 text-[9px] font-bold mt-1 uppercase">Localizar Aluno e Registros</p>
             </div>
@@ -667,7 +650,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                   setPermanentSearchTerm('');
                   setSelectedStudentForHistory(null);
                 }}
-                className="px-12 py-4 bg-[#002b5c] text-white font-black text-[10px] uppercase rounded-full hover:shadow-xl transition-all active:scale-95"
+                className="px-12 py-4 bg-[#0d47a1] text-white font-black text-[10px] uppercase rounded-full hover:shadow-xl transition-all active:scale-95"
               >
                 Fechar Histórico
               </button>
@@ -680,9 +663,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
       {showProfessorsModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in shadow-2xl">
           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[40px] overflow-hidden flex flex-col border border-white/20">
-            <div className="bg-[#002b5c] p-6 text-center shrink-0 border-b-4 border-teal-500">
+            <div className="bg-[#0d47a1] p-6 text-center shrink-0 border-b-4 border-blue-500">
               <h3 className="text-white font-black text-xs uppercase tracking-[0.2em]">Gerenciar Professores Autorizados</h3>
-              <p className="text-teal-400 text-[9px] font-bold mt-1 uppercase">Controle de Acesso à Plataforma</p>
+              <p className="text-blue-400 text-[9px] font-bold mt-1 uppercase">Controle de Acesso à Plataforma</p>
             </div>
 
             <div className="p-8 flex-1 overflow-y-auto custom-scrollbar flex flex-col lg:flex-row gap-8">
@@ -698,7 +681,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                       value={newProfEmail}
                       onChange={e => setNewProfEmail(e.target.value)}
                       placeholder="exemplo@escola.com.br"
-                      className="w-full h-11 px-4 bg-white border border-gray-200 rounded-2xl text-[10px] font-bold outline-none focus:ring-2 focus:ring-teal-500 transition-all text-black"
+                      className="w-full h-11 px-4 bg-white border border-gray-200 rounded-2xl text-[10px] font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-black"
                     />
                   </div>
                   <div className="space-y-1">
@@ -709,13 +692,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                       value={newProfNome}
                       onChange={e => setNewProfNome(e.target.value)}
                       placeholder="NOME DO PROFESSOR"
-                      className="w-full h-11 px-4 bg-white border border-gray-200 rounded-2xl text-[10px] font-bold outline-none focus:ring-2 focus:ring-teal-500 transition-all uppercase text-black"
+                      className="w-full h-11 px-4 bg-white border border-gray-200 rounded-2xl text-[10px] font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all uppercase text-black"
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={isManagingProfs}
-                    className="w-full py-4 bg-teal-500 text-white font-black text-[10px] uppercase rounded-2xl hover:bg-teal-600 transition-all shadow-md active:scale-95 disabled:opacity-50"
+                    className="w-full py-4 bg-blue-500 text-white font-black text-[10px] uppercase rounded-2xl hover:bg-blue-600 transition-all shadow-md active:scale-95 disabled:opacity-50"
                   >
                     {isManagingProfs ? 'Salvando...' : 'Adicionar Professor'}
                   </button>

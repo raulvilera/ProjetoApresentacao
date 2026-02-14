@@ -210,35 +210,23 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
 
   return (
     <div className="min-h-screen bg-[#001a35] font-sans pb-12 overflow-x-hidden">
-      <header className="bg-[#002b5c] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
+      <header className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
         <div className="flex flex-col items-center sm:items-start">
-          <h1 className="text-sm font-black uppercase text-teal-400">Área do Professor 2026</h1>
-          <p className="text-[9px] font-bold text-white/50 uppercase">Escola Modelo de Tecnologia</p>
+          <h1 className="text-sm font-black uppercase text-blue-300">Área do Professor</h1>
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Plataforma Escolar Pro</p>
         </div>
         <div className="flex gap-4 sm:gap-6 items-center">
           <span className="text-[10px] font-bold text-white/70">{user.email}</span>
-          {onSyncStudents && (
-            <button
-              onClick={onSyncStudents}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95 flex items-center gap-2"
-              title="Sincronizar alunos do Google Sheets para o Supabase"
-            >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Sincronizar Alunos
-            </button>
-          )}
-          <button onClick={onLogout} className="bg-white text-[#002b5c] px-5 py-1.5 rounded-xl text-[10px] font-black uppercase shadow-lg hover:bg-gray-100 transition-all">Sair</button>
+          <button onClick={onLogout} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-1.5 rounded-xl text-[10px] font-black uppercase shadow-lg transition-all">Sair</button>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto mt-4 sm:mt-8 px-4 sm:px-6 space-y-8">
-        <div className="bg-[#001a35] rounded-3xl shadow-2xl overflow-hidden border border-white/5">
-          <div className="bg-[#004a99] py-3 text-center border-b border-white/10">
+        <div className="bg-[#0f2862] rounded-3xl shadow-2xl overflow-hidden border border-white/10">
+          <div className="bg-[#0d47a1] py-3 text-center border-b border-white/10">
             <h2 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">LANÇAMENTO DE REGISTROS DISCIPLINARES</h2>
           </div>
-          <div className="p-4 sm:p-8 bg-gradient-to-br from-[#115e59] via-[#14b8a6] to-[#ea580c]">
+          <div className="p-4 sm:p-8 bg-gradient-to-br from-[#1e3a8a] via-[#0d47a1] to-[#1e88e5]">
             <form onSubmit={handleSave} className="space-y-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 space-y-1">
@@ -332,7 +320,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                 <button
                   type="submit"
                   disabled={isSaving || selectedStudents.length === 0}
-                  className="w-auto px-16 py-5 bg-gradient-to-r from-blue-400 to-blue-900 text-white font-black text-[11px] uppercase tracking-widest rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 border-b-4 border-blue-950"
+                  className="w-auto px-16 py-5 bg-gradient-to-b from-[#42a5f5] to-[#1e88e5] hover:from-[#1e88e5] hover:to-[#1565c0] text-white font-black text-[11px] uppercase tracking-widest rounded-2xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 border-b-4 border-[#0d47a1]"
                 >
                   {isSaving ? 'Gravando...' : `Registrar para ${selectedStudents.length} Aluno(s)`}
                 </button>
@@ -342,12 +330,12 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
         </div>
 
         <section className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-          <div className="px-6 py-4 bg-[#004a99] text-white flex justify-between items-center">
+          <div className="px-6 py-4 bg-[#0d47a1] text-white flex justify-between items-center">
             <div className="flex flex-col">
               <h3 className="text-[10px] font-black uppercase tracking-widest">Histórico Recente</h3>
               <button
                 onClick={() => setShowPermanentSearch(true)}
-                className="text-[9px] text-teal-400 font-black uppercase text-left hover:underline flex items-center gap-1 group"
+                className="text-[9px] text-blue-300 font-black uppercase text-left hover:underline flex items-center gap-1 group"
               >
                 Ir para Histórico Permanente
                 <svg className="w-2.5 h-2.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -452,9 +440,9 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
       {showPermanentSearch && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in shadow-2xl">
           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[40px] overflow-hidden flex flex-col border border-white/20">
-            <div className="bg-[#002b5c] p-6 text-center shrink-0 border-b-4 border-teal-500">
+            <div className="bg-[#1e3a8a] p-6 text-center shrink-0 border-b-4 border-blue-400">
               <h3 className="text-white font-black text-xs uppercase tracking-[0.2em]">Busca Criteriosa no Histórico Permanente</h3>
-              <p className="text-teal-400 text-[9px] font-bold mt-1 uppercase">Localizar Aluno e Registros</p>
+              <p className="text-blue-300 text-[9px] font-bold mt-1 uppercase">Localizar Aluno e Registros</p>
             </div>
 
             <div className="p-8 flex-1 overflow-y-auto custom-scrollbar">
