@@ -226,7 +226,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
           <div className="bg-[#0d47a1] py-3 text-center border-b border-white/10">
             <h2 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">LANÇAMENTO DE REGISTROS DISCIPLINARES</h2>
           </div>
-          <div className="p-4 sm:p-8 bg-gradient-to-b from-[#0c1421] via-[#0d47a1] to-[#1e3a8a]">
+          <div className="p-4 sm:p-8 bg-gradient-to-b from-[#1e3a8a] via-[#0d47a1] to-black">
             <form onSubmit={handleSave} className="space-y-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 space-y-1">

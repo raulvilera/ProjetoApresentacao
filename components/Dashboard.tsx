@@ -254,7 +254,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
             <h2 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">EFETUAR NOVO REGISTRO ADMINISTRATIVO</h2>
           </div>
 
-          <div className="p-6 sm:p-10 bg-gradient-to-b from-[#0c1421] via-[#0d47a1] to-[#1e3a8a]">
+          <div className="p-6 sm:p-10 bg-gradient-to-b from-[#1e3a8a] via-[#0d47a1] to-black">
             <form onSubmit={handleSave} className="space-y-6 sm:space-y-8">
               <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-end">
                 <div className="flex flex-col gap-2 w-full lg:w-48">
