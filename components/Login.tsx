@@ -244,13 +244,27 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[radial-gradient(circle,_#3b82f6_0%,_#1e3a8a_100%)] p-8 font-sans relative overflow-x-hidden">
-      {/* Decorative Icons (Top Right) */}
-      <div className="absolute top-10 right-10 opacity-10 pointer-events-none select-none">
-        <svg width="200" height="150" viewBox="0 0 200 150" fill="white">
-          <path d="M10,140 L10,100 L40,100 L40,140 Z M50,140 L50,80 L80,80 L80,140 Z M90,140 L90,60 L120,60 L120,140 Z M130,140 L130,40 L160,40 L160,140 Z" />
-          <path transform="translate(170, 40) scale(0.5)" d="M100 25c-41.42 0-75 33.58-75 75s33.58 75 75 75 75-33.58 75-75-33.58-75-75-75zm0 135c-33.14 0-60-26.86-60-60s26.86-60 60-60 60 26.86 60 60-26.86 60-60 60zM100 60c-22.09 0-40 17.91-40 40s17.91 40 40 40 40-17.91 40-40-17.91-40-40-40z" />
-          <path transform="translate(130, -10) scale(0.4)" d="M100 25c-41.42 0-75 33.58-75 75s33.58 75 75 75 75-33.58 75-75-33.58-75-75-75zm0 135c-33.14 0-60-26.86-60-60s26.86-60 60-60 60 26.86 60 60-26.86 60-60 60z" />
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#2c3e50] via-[#4a5568] to-[#1e3a8a] p-8 font-sans relative overflow-x-hidden">
+      {/* Decorative dot grid (Top Right) */}
+      <div className="absolute top-10 right-10 opacity-20 pointer-events-none select-none">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="white">
+          <circle cx="10" cy="10" r="2" /> <circle cx="30" cy="10" r="2" /> <circle cx="50" cy="10" r="2" /> <circle cx="70" cy="10" r="2" /> <circle cx="90" cy="10" r="2" />
+          <circle cx="10" cy="30" r="2" /> <circle cx="30" cy="30" r="2" /> <circle cx="50" cy="30" r="2" /> <circle cx="70" cy="30" r="2" /> <circle cx="90" cy="30" r="2" />
+          <circle cx="10" cy="50" r="2" /> <circle cx="30" cy="50" r="2" /> <circle cx="50" cy="50" r="2" /> <circle cx="70" cy="50" r="2" /> <circle cx="90" cy="50" r="2" />
+          <circle cx="10" cy="70" r="2" /> <circle cx="30" cy="70" r="2" /> <circle cx="50" cy="70" r="2" /> <circle cx="70" cy="70" r="2" /> <circle cx="90" cy="70" r="2" />
+          <circle cx="10" cy="90" r="2" /> <circle cx="30" cy="90" r="2" /> <circle cx="50" cy="90" r="2" /> <circle cx="70" cy="90" r="2" /> <circle cx="90" cy="90" r="2" />
+        </svg>
+      </div>
+
+      {/* Geometric wireframe (Center Left) */}
+      <div className="absolute top-1/2 left-20 -translate-y-1/2 opacity-10 pointer-events-none select-none hidden lg:block">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" stroke="white" strokeWidth="1">
+          <path d="M50,150 L200,50 L350,150 L200,350 Z" />
+          <path d="M50,150 L350,150" />
+          <path d="M200,50 L200,350" />
+          <path d="M50,150 L200,200 L350,150" />
+          <path d="M200,50 L200,200 L200,350" />
+          <circle cx="200" cy="200" r="100" strokeDasharray="5,5" />
         </svg>
       </div>
 
