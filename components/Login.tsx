@@ -29,11 +29,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   }, []);
 
   // Mapeamento de aliases de e-mail (Opcional)
-  const EMAIL_ALIASES: Record<string, string> = {};
+  const EMAIL_ALIASES: Record<string, string> = {
+    'gestao@escola.com': 'gestor@escola.com.br'
+  };
 
   // E-mails de gestão permitidos para demonstração
   const MANAGEMENT_EMAILS = [
-    'gestor@escola.com.br'
+    'gestor@escola.com.br',
+    'gestao@escola.com'
   ];
 
   const resolveEmailAlias = (email: string): string => {
