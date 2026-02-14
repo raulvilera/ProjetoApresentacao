@@ -244,7 +244,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[radial-gradient(circle,_#3b82f6_0%,_#1e3a8a_100%)] p-4 font-sans relative overflow-hidden fixed inset-0">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[radial-gradient(circle,_#3b82f6_0%,_#1e3a8a_100%)] p-8 font-sans relative overflow-x-hidden">
       {/* Decorative Icons (Top Right) */}
       <div className="absolute top-10 right-10 opacity-10 pointer-events-none select-none">
         <svg width="200" height="150" viewBox="0 0 200 150" fill="white">
