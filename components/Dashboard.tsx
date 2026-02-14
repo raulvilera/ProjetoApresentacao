@@ -334,7 +334,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                       type="date"
                       value={returnDate}
                       onChange={e => setReturnDate(e.target.value)}
-                      className="h-12 sm:h-14 border border-orange-300 rounded-2xl px-5 text-xs font-bold !text-black bg-white focus:ring-2 focus:ring-orange-500 outline-none shadow-sm cursor-pointer w-full"
+                      className="h-12 sm:h-14 border border-white/10 rounded-2xl px-5 text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] focus:ring-2 focus:ring-blue-500 outline-none shadow-sm cursor-pointer w-full invert-calendar-icon"
                     />
                   </div>
                 )}
@@ -346,7 +346,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                   rows={5}
                   value={description}
                   onChange={e => setDescription(e.target.value)}
-                  className="w-full p-6 border border-gray-200 rounded-[28px] text-xs font-bold !text-black bg-white focus:ring-2 focus:ring-blue-500 outline-none shadow-sm uppercase placeholder:text-gray-300"
+                  className="w-full p-6 border border-white/10 rounded-[28px] text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] focus:ring-2 focus:ring-blue-500 outline-none shadow-sm uppercase placeholder:text-white/30"
                   placeholder="Relatório detalhado da ocorrência e medidas tomadas..."
                 ></textarea>
               </div>
@@ -386,7 +386,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
                   placeholder="Filtrar recentes..."
-                  className="w-full pl-10 pr-6 py-2 rounded-xl bg-white/10 border border-white/20 text-[9px] sm:text-[10px] text-white outline-none"
+                  className="w-full pl-10 pr-6 py-2 rounded-xl bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/20 text-[9px] sm:text-[10px] text-white outline-none focus:ring-1 focus:ring-blue-400/50"
                 />
                 <svg className="w-4 h-4 absolute left-3 top-2.5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               </div>

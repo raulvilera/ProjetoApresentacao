@@ -291,7 +291,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                   <select
                     value={classification}
                     onChange={e => setClassification(e.target.value)}
-                    className="w-full h-11 px-4 rounded-xl text-xs font-bold !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all cursor-pointer"
+                    className="w-full h-11 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer appearance-none"
                   >
                     <option value="OCORRÊNCIA DISCIPLINAR">OCORRÊNCIA DISCIPLINAR</option>
                     <option value="OCORRÊNCIA PEDAGÓGICA">OCORRÊNCIA PEDAGÓGICA</option>
@@ -305,7 +305,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                       type="date"
                       value={returnDate}
                       onChange={e => setReturnDate(e.target.value)}
-                      className="w-full h-11 px-4 rounded-xl text-xs font-bold !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all cursor-pointer"
+                      className="w-full h-11 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer invert-calendar-icon"
                     />
                   </div>
                 )}
@@ -313,7 +313,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
 
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-white uppercase block ml-2 tracking-widest">DESCRIÇÃO</label>
-                <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} placeholder="RELATE O OCORRIDO DETALHADAMENTE..." className="w-full p-4 rounded-xl text-xs font-bold uppercase !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all"></textarea>
+                <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} placeholder="RELATE O OCORRIDO DETALHADAMENTE..." className="w-full p-4 rounded-xl text-xs font-bold uppercase text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-white/30"></textarea>
               </div>
 
               <div className="flex justify-center pb-2">
@@ -343,7 +343,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                 </svg>
               </button>
             </div>
-            <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Filtrar histórico..." className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-[10px] text-white placeholder:text-white/40 outline-none focus:bg-white focus:text-black" />
+            <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Filtrar histórico..." className="bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/20 rounded-lg px-3 py-1.5 text-[10px] text-white placeholder:text-white/40 outline-none focus:ring-1 focus:ring-blue-400/50 transition-all" />
           </div>
 
           <div className="overflow-x-auto custom-scrollbar">

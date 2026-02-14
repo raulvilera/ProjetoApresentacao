@@ -14,14 +14,22 @@ const turmas = [
 ];
 
 const generateMockStudents = (): Student[] => {
+  const firstNames = [
+    'Carlos', 'Ágatta', 'Juliana', 'Marcos', 'Fernanda', 'Ricardo', 'Beatriz', 'Gabriel', 'Larissa', 'Thiago',
+    'Camila', 'Rafael', 'Amanda', 'Bruno', 'Isabela', 'Lucas', 'Sofia', 'Matheus', 'Giovanna', 'Vinícius',
+    'Heitor', 'Valentina', 'Enzo', 'Alice', 'Davi', 'Helena', 'Bernardo', 'Sophia', 'Samuel', 'Manuela',
+    'João', 'Laura', 'Pedro', 'Isabella', 'Gabriel', 'Luiza', 'Gustavo', 'Lorena', 'Isaac', 'Júlia'
+  ];
+
   const students: Student[] = [];
   let idCounter = 1;
 
   turmas.forEach(turma => {
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 0; i < 20; i++) {
+      const nameIndex = (idCounter - 1) % firstNames.length;
       const raSuffix = idCounter.toString().padStart(4, '0');
       students.push({
-        nome: `ALUNO DEMO ${turma.split(' ')[0]} - ${i.toString().padStart(2, '0')}`,
+        nome: `${firstNames[nameIndex]} (Demo)`,
         ra: `123.456.789-${raSuffix}`,
         turma: turma
       });
