@@ -256,18 +256,20 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       <div className="flex flex-col items-center w-full max-w-[480px] z-10">
         <div className="flex flex-col items-center mb-10">
-          <h1 className="text-4xl font-bold text-white text-center tracking-tight drop-shadow-lg">
+          <h1 className="text-3xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl">
             SEJA BEM-VINDO
           </h1>
-          <p className="text-[10px] text-blue-200/60 font-bold tracking-[0.3em] uppercase mt-2">Plataforma de Gestão</p>
         </div>
 
         <div className="w-full bg-[#0d47a1]/40 backdrop-blur-md rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 p-8 flex flex-col items-center animate-fade-in relative">
 
-          <h2 className="text-3xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl mb-8 border-b border-white/10 w-full pb-4">
-            GESTÃO<br />
-            <span className="text-blue-400">PRO</span>
-          </h2>
+          <div className="flex flex-col items-center mb-8 border-b border-white/10 w-full pb-4">
+            <h2 className="text-3xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl">
+              GESTÃO<br />
+              <span className="text-blue-400">PRO</span>
+            </h2>
+            <p className="text-[10px] text-blue-300 font-bold tracking-[0.4em] uppercase mt-2">INTELIGENTE</p>
+          </div>
 
           {authMode === 'login' && (
             <form onSubmit={handleLogin} className="w-full space-y-6 flex flex-col items-center">
