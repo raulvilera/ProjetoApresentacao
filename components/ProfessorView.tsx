@@ -226,7 +226,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
           <div className="bg-[#0d47a1] py-3 text-center border-b border-white/10">
             <h2 className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest">LANÇAMENTO DE REGISTROS DISCIPLINARES</h2>
           </div>
-          <div className="p-4 sm:p-8 bg-gradient-to-br from-[#1e3a8a] via-[#0d47a1] to-[#1e88e5]">
+          <div className="p-4 sm:p-8 bg-gradient-to-b from-[#0c1421] via-[#0d47a1] to-[#1e3a8a]">
             <form onSubmit={handleSave} className="space-y-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1 space-y-1">
@@ -291,7 +291,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                   <select
                     value={classification}
                     onChange={e => setClassification(e.target.value)}
-                    className="w-full h-11 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer appearance-none"
+                    className="w-full h-11 px-4 rounded-xl text-xs font-bold !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all cursor-pointer"
                   >
                     <option value="OCORRÊNCIA DISCIPLINAR">OCORRÊNCIA DISCIPLINAR</option>
                     <option value="OCORRÊNCIA PEDAGÓGICA">OCORRÊNCIA PEDAGÓGICA</option>
@@ -305,7 +305,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                       type="date"
                       value={returnDate}
                       onChange={e => setReturnDate(e.target.value)}
-                      className="w-full h-11 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer invert-calendar-icon"
+                      className="w-full h-11 px-4 rounded-xl text-xs font-bold !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all cursor-pointer"
                     />
                   </div>
                 )}
@@ -313,7 +313,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
 
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-white uppercase block ml-2 tracking-widest">DESCRIÇÃO</label>
-                <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} placeholder="RELATE O OCORRIDO DETALHADAMENTE..." className="w-full p-4 rounded-xl text-xs font-bold uppercase text-white bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/10 shadow-inner outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-white/30"></textarea>
+                <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} placeholder="RELATE O OCORRIDO DETALHADAMENTE..." className="w-full p-4 rounded-xl text-xs font-bold uppercase !text-black bg-white shadow-inner outline-none focus:ring-2 focus:ring-orange-500 transition-all"></textarea>
               </div>
 
               <div className="flex justify-center pb-2">
@@ -343,7 +343,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
                 </svg>
               </button>
             </div>
-            <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Filtrar histórico..." className="bg-gradient-to-b from-[#1e3a8a] to-[#0c1421] border border-white/20 rounded-lg px-3 py-1.5 text-[10px] text-white placeholder:text-white/40 outline-none focus:ring-1 focus:ring-blue-400/50 transition-all" />
+            <input type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Filtrar histórico..." className="bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-[10px] text-white placeholder:text-white/40 outline-none focus:bg-white focus:text-black" />
           </div>
 
           <div className="overflow-x-auto custom-scrollbar">
