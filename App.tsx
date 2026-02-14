@@ -163,7 +163,7 @@ const App: React.FC = () => {
     };
 
     loadStudentsData();
-    (window as any).refreshStudents = (sync = false) => loadStudentsData(sync);
+    (window as any).refreshStudents = () => loadStudentsData();
   }, [user]);
 
   // Sincronização desabilitada na versão demo
@@ -370,7 +370,7 @@ const App: React.FC = () => {
     return (
       <div className="h-screen w-full bg-[#1e3a8a] flex flex-col items-center justify-center">
         <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">Carregando Demonstração...</p>
+        <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">Carregando GESTÃO PRO...</p>
       </div>
     );
   }

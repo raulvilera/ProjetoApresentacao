@@ -255,14 +255,18 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       </div>
 
       <div className="flex flex-col items-center w-full max-w-[480px] z-10">
-        <h1 className="text-white text-4xl font-bold mb-10 tracking-tight drop-shadow-lg">
-          Bem-vindo ao Sistema
-        </h1>
+        <div className="flex flex-col items-center mb-10">
+          <h1 className="text-5xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl">
+            GESTÃO<br />
+            <span className="text-blue-400">PRO</span>
+          </h1>
+          <p className="text-[10px] text-blue-200/60 font-bold tracking-[0.3em] uppercase mt-2">Inteligência Escolar</p>
+        </div>
 
         <div className="w-full bg-[#0d47a1]/40 backdrop-blur-md rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 p-8 flex flex-col items-center animate-fade-in relative">
 
           <h2 className="text-white text-xl font-semibold mb-8 uppercase tracking-wider border-b border-white/10 w-full text-center pb-4">
-            Acesso ao Sistema
+            Acesso Restrito
           </h2>
 
           {authMode === 'login' && (
@@ -382,6 +386,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           {authMode === 'forgot' && (
             <form onSubmit={handleResetPassword} className="w-full space-y-6 flex flex-col items-center animate-fade-in">
+              <h2 className="text-3xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl">
+                GESTÃO<br />
+                <span className="text-blue-300">PRO</span>
+              </h2>
+              <p className="text-[10px] text-blue-200/60 font-bold tracking-[0.3em] uppercase mt-2 text-center">Inteligência Escolar</p>
               <p className="text-[13px] font-medium text-white/70 text-center px-4">Insira seu e-mail para receber as instruções.</p>
               <div className="w-full space-y-2">
                 <label className="text-[13px] font-medium text-white/90 px-1">E-mail Institucional</label>
