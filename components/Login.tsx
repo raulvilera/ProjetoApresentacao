@@ -263,12 +263,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
         <div className="w-full bg-[#0d47a1]/40 backdrop-blur-md rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 p-8 flex flex-col items-center animate-fade-in relative">
 
-          <div className="flex flex-col items-center mb-8 border-b border-white/10 w-full pb-4">
-            <h2 className="text-3xl font-black text-white text-center leading-tight tracking-tighter uppercase drop-shadow-2xl">
-              GESTÃO<br />
-              <span className="text-blue-400">PRO</span>
+          <div className="flex flex-col items-center mb-8 border-b border-white/10 w-full pb-6">
+            <h2 className="text-3xl font-black text-white text-center tracking-tighter uppercase drop-shadow-2xl">
+              GESTÃO <span className="text-blue-400">PRO</span>
             </h2>
-            <p className="text-[10px] text-blue-300 font-bold tracking-[0.4em] uppercase mt-2">INTELIGENTE</p>
+            <p className="text-[11px] text-blue-100/90 font-medium mt-3 text-center leading-relaxed max-w-[280px]">
+              sua plataforma de gestão totalmente integrada
+            </p>
           </div>
 
           {authMode === 'login' && (
