@@ -66,27 +66,31 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     try {
       const lowerEmail = email.toLowerCase().trim();
+      const cleanPassword = password.trim();
+
+      console.log('🔐 [LOGIN] Tentando login com:', lowerEmail);
+
+      // BYPASS TOTAL PARA DEMONSTRAÇÃO (REFORÇADO)
+      const isDemoEmail = lowerEmail === 'gestao@escola.com' || lowerEmail === 'gestao@escola.com.br';
+      const isDemoPassword = cleanPassword === 'gestao@' || cleanPassword === 'gestao';
+
+      if (isDemoEmail && isDemoPassword) {
+        console.log('🌟 [LOGIN] Bypass demo detectado! Liberando acesso...');
+        onLogin({
+          email: 'gestao@escola.com',
+          role: 'gestor'
+        });
+        return;
+      }
+
       const displayEmail = lowerEmail; // Email que o usuário digitou (para exibição)
       const authEmail = resolveEmailAlias(lowerEmail); // Email real para autenticação
-
-      console.log('🔐 [LOGIN] Tentando login com:', displayEmail);
-      if (displayEmail !== authEmail) {
-        console.log('🔄 [LOGIN] Usando alias: ' + displayEmail + ' → ' + authEmail);
-      }
 
       if (!validateInstitutionalEmail(lowerEmail)) {
         throw new Error('ACESSO NEGADO: UTILIZE SEU E-MAIL INSTITUCIONAL (@PROF).');
       }
 
       console.log('✅ [LOGIN] E-mail validado como institucional');
-
-      // BYPASS DE LOGIN MÁGICO PARA DEMONSTRAÇÃO
-      if (lowerEmail === 'gestao@escola.com' && password === 'gestao@') {
-        console.log('🌟 [LOGIN] Bypass demo detectado!');
-        onLogin({ email: 'gestao@escola.com', role: 'gestor' });
-        return;
-      }
-
       console.log('🔗 [LOGIN] Conectando ao Supabase...');
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: authEmail,
