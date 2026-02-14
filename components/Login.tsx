@@ -247,146 +247,181 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const LOGO_PEP_CIRCULAR = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqAsB6ThMLLLLsuZ2yx8qAn8Koh4k4naDt3dSMtnPRxb_wWFP84Ve5mnuUTBLP2COJAi8cfYMRrN0qWKyUFJV8pjQXbhrLb2yc2K8mJ5qsqsSCor4fJcdl2IDn-Xtqtqc31I-5_BWai_JljBZIMRVr-SB5vW04GE8gefLARCWrun9gIx10lkCVN6coAV24/s229/images-removebg-preview.png";
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-[#000d1a] p-4 font-sans relative overflow-hidden fixed inset-0">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#000d1a] via-[#001a35] to-[#002b5c] opacity-100"></div>
+    <div className="h-screen w-full flex items-center justify-center bg-[radial-gradient(circle,_#3b82f6_0%,_#1e3a8a_100%)] p-4 font-sans relative overflow-hidden fixed inset-0">
+      {/* Decorative Icons (Top Right) */}
+      <div className="absolute top-10 right-10 opacity-10 pointer-events-none select-none">
+        <svg width="200" height="150" viewBox="0 0 200 150" fill="white">
+          <path d="M10,140 L10,100 L40,100 L40,140 Z M50,140 L50,80 L80,80 L80,140 Z M90,140 L90,60 L120,60 L120,140 Z M130,140 L130,40 L160,40 L160,140 Z" />
+          <path transform="translate(170, 40) scale(0.5)" d="M100 25c-41.42 0-75 33.58-75 75s33.58 75 75 75 75-33.58 75-75-33.58-75-75-75zm0 135c-33.14 0-60-26.86-60-60s26.86-60 60-60 60 26.86 60 60-26.86 60-60 60zM100 60c-22.09 0-40 17.91-40 40s17.91 40 40 40 40-17.91 40-40-17.91-40-40-40z" />
+          <path transform="translate(130, -10) scale(0.4)" d="M100 25c-41.42 0-75 33.58-75 75s33.58 75 75 75 75-33.58 75-75-33.58-75-75-75zm0 135c-33.14 0-60-26.86-60-60s26.86-60 60-60 60 26.86 60 60-26.86 60-60 60z" />
+        </svg>
+      </div>
 
-      <div className="w-full max-w-[440px] bg-white rounded-[60px] shadow-[0_40px_80px_rgba(0,0,0,0.7)] flex flex-col items-center z-10 relative py-10 px-10 border border-white/10 animate-fade-in overflow-y-auto max-h-[95vh] custom-scrollbar">
+      <div className="flex flex-col items-center w-full max-w-[480px] z-10">
+        <h1 className="text-white text-4xl font-bold mb-10 tracking-tight drop-shadow-lg">
+          Bem-vindo ao Sistema
+        </h1>
 
-        <div className="mb-4 mt-2 relative">
-          <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full"></div>
-          <img src={LOGO_PEP_CIRCULAR} alt="PEP Logo" className="w-20 h-20 object-contain relative z-10 drop-shadow-2xl" />
-        </div>
+        <div className="w-full bg-[#0d47a1]/40 backdrop-blur-md rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/20 p-8 flex flex-col items-center animate-fade-in relative">
 
-        <div className="text-center mb-8">
-          <h1 className="text-[#002b5c] text-lg font-black uppercase tracking-tight">
-            {authMode === 'login' ? 'PORTAL Plataforma Pro' : authMode === 'register' ? 'CRIAR NOVA CONTA' : 'RECUPERAR ACESSO'}
-          </h1>
-          <div className="h-1.5 w-10 bg-teal-500 mx-auto mt-2 rounded-full"></div>
-          <p className="text-gray-400 text-[8px] font-black uppercase tracking-[0.4em] mt-3">
-            SISTEMA DE GESTÃO 2026
-          </p>
-        </div>
+          <h2 className="text-white text-xl font-semibold mb-8 uppercase tracking-wider border-b border-white/10 w-full text-center pb-4">
+            Acesso ao Sistema
+          </h2>
 
-        {authMode === 'login' && (
-          <form onSubmit={handleLogin} className="w-full space-y-4 flex flex-col items-center animate-fade-in">
-            <div className="space-y-1 w-full text-left">
-              <label className="text-[9px] font-black text-[#002b5c] uppercase ml-6 tracking-widest opacity-70">E-mail Institucional</label>
-              <input
-                required
-                type="email"
-                placeholder="nome@escola.com.br"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full h-12 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all lowercase"
-              />
-            </div>
-
-            <div className="space-y-1 w-full text-left">
-              <div className="flex justify-between items-center px-6">
-                <label className="text-[9px] font-black text-[#002b5c] uppercase tracking-widest opacity-70">Senha</label>
-                <button type="button" onClick={() => setAuthMode('forgot')} className="text-[8px] font-black text-teal-600 uppercase hover:underline">Esqueci a senha</button>
+          {authMode === 'login' && (
+            <form onSubmit={handleLogin} className="w-full space-y-6 flex flex-col items-center">
+              {/* Usuário */}
+              <div className="w-full space-y-2">
+                <div className="flex items-center space-x-2 px-1">
+                  <svg className="w-4 h-4 text-white/70" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
+                  <label className="text-[13px] font-medium text-white/90">Usuário</label>
+                </div>
+                <div className="relative group">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 group-focus-within:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <input
+                    required
+                    type="email"
+                    placeholder="Digite seu usuário"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className="w-full h-12 pl-12 pr-4 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/20 transition-all font-medium"
+                  />
+                </div>
               </div>
-              <input
-                required
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="w-full h-12 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-              />
-            </div>
 
-            {error && <div className="p-3 w-full bg-red-50 text-red-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-red-100 animate-shake leading-tight">{error}</div>}
-            {message && <div className="p-3 w-full bg-teal-50 text-teal-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-teal-100 leading-tight">{message}</div>}
+              {/* Senha */}
+              <div className="w-full space-y-2">
+                <div className="flex items-center space-x-2 px-1">
+                  <svg className="w-4 h-4 text-white/70" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  </svg>
+                  <label className="text-[13px] font-medium text-white/90">Senha</label>
+                </div>
+                <div className="relative group">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 group-focus-within:text-white transition-colors">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    required
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Digite sua senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    className="w-full h-12 pl-12 pr-20 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white/20 transition-all font-medium"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white/90 text-[10px] px-3 py-1 rounded border border-white/20 transition-all"
+                  >
+                    {showPassword ? 'Ocultar' : 'Mostrar'}
+                  </button>
+                </div>
+              </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-14 bg-gradient-to-r from-blue-400 to-blue-900 hover:scale-[1.02] text-white rounded-full font-black text-[10px] uppercase tracking-[0.25em] shadow-xl transition-all active:scale-95 disabled:opacity-50 mt-4"
-            >
-              {isLoading ? 'VERIFICANDO...' : 'ENTRAR NO PORTAL'}
-            </button>
+              {error && <div className="p-3 w-full bg-red-500/20 text-red-100 rounded-[8px] text-xs font-medium text-center border border-red-500/30 animate-shake">{error}</div>}
+              {message && <div className="p-3 w-full bg-blue-500/20 text-blue-100 rounded-[8px] text-xs font-medium text-center border border-blue-500/30">{message}</div>}
 
-            <button
-              type="button"
-              onClick={() => { setAuthMode('register'); setError(''); setMessage(''); }}
-              className="mt-4 text-[9px] font-black text-gray-400 uppercase tracking-widest hover:text-[#002b5c] transition-colors"
-            >
-              Primeiro acesso? <span className="text-teal-600">Cadastre-se aqui</span>
-            </button>
-          </form>
-        )}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full h-14 bg-gradient-to-b from-[#42a5f5] to-[#1e88e5] hover:from-[#1e88e5] hover:to-[#1565c0] text-white rounded-[12px] font-bold text-lg shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all active:scale-[0.98] disabled:opacity-50 mt-4 active:shadow-inner"
+              >
+                {isLoading ? 'Acessando...' : 'Entrar'}
+              </button>
 
-        {authMode === 'register' && (
-          <form onSubmit={handleRegister} className="w-full space-y-3 flex flex-col items-center animate-fade-in">
-            <div className="space-y-1 w-full text-left">
-              <label className="text-[9px] font-black text-[#002b5c] uppercase ml-6 tracking-widest opacity-70">E-mail Institucional</label>
-              <input required type="email" placeholder="nome@escola.com.br" value={email} onChange={e => setEmail(e.target.value)} className="w-full h-11 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all lowercase" />
-            </div>
-            <div className="space-y-1 w-full text-left">
-              <label className="text-[9px] font-black text-[#002b5c] uppercase ml-6 tracking-widest opacity-70">Criar Senha</label>
-              <input required type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={e => setPassword(e.target.value)} className="w-full h-11 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all" />
-            </div>
-            <div className="space-y-1 w-full text-left">
-              <label className="text-[9px] font-black text-[#002b5c] uppercase ml-6 tracking-widest opacity-70">Confirmar Senha</label>
-              <input required type="password" placeholder="••••••••" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="w-full h-11 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all" />
-            </div>
+              <button
+                type="button"
+                onClick={() => setAuthMode('forgot')}
+                className="text-[13px] font-medium text-white/70 hover:text-white transition-colors"
+              >
+                Esqueceu sua senha?
+              </button>
 
-            {error && <div className="p-3 w-full bg-red-50 text-red-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-red-100 leading-tight">{error}</div>}
-            {message && <div className="p-3 w-full bg-teal-50 text-teal-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-teal-100 leading-tight">{message}</div>}
+              <button
+                type="button"
+                onClick={() => { setAuthMode('register'); setError(''); setMessage(''); }}
+                className="text-[11px] font-medium text-white/50 hover:text-white transition-colors mt-2"
+              >
+                Novo por aqui? <span className="text-blue-300">Criar uma conta demo</span>
+              </button>
+            </form>
+          )}
 
-            <button type="submit" disabled={isLoading} className="w-full h-14 bg-gradient-to-r from-teal-400 to-teal-700 hover:scale-[1.02] text-white rounded-full font-black text-[10px] uppercase tracking-[0.25em] shadow-xl transition-all active:scale-95 disabled:opacity-50 mt-4">
-              {isLoading ? 'CRIANDO CONTA...' : 'CRIAR MINHA CONTA'}
-            </button>
+          {authMode === 'register' && (
+            <form onSubmit={handleRegister} className="w-full space-y-4 flex flex-col items-center animate-fade-in">
+              <div className="w-full space-y-2">
+                <label className="text-[13px] font-medium text-white/90 px-1">E-mail Institucional</label>
+                <input required type="email" placeholder="nome@escola.com.br" value={email} onChange={e => setEmail(e.target.value)} className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+              </div>
+              <div className="w-full space-y-2">
+                <label className="text-[13px] font-medium text-white/90 px-1">Senha</label>
+                <input required type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={e => setPassword(e.target.value)} className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+              </div>
+              <div className="w-full space-y-2">
+                <label className="text-[13px] font-medium text-white/90 px-1">Confirmar Senha</label>
+                <input required type="password" placeholder="••••••••" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+              </div>
 
-            <button type="button" onClick={() => { setAuthMode('login'); setError(''); setMessage(''); }} className="mt-4 text-[9px] font-black text-gray-400 uppercase tracking-widest hover:text-[#002b5c] transition-colors">
-              Já tem conta? <span className="text-teal-600">Voltar para o Login</span>
-            </button>
-          </form>
-        )}
+              {error && <div className="p-3 w-full bg-red-500/20 text-red-100 rounded-[8px] text-xs font-medium text-center border border-red-500/30">{error}</div>}
 
-        {authMode === 'forgot' && (
-          <form onSubmit={handleResetPassword} className="w-full space-y-6 flex flex-col items-center animate-fade-in">
-            <div className="text-center px-4">
-              <p className="text-[9px] font-bold text-gray-400 uppercase leading-relaxed">Insira seu e-mail institucional abaixo para receber as instruções de redefinição.</p>
-            </div>
-            <div className="space-y-1 w-full text-left">
-              <label className="text-[9px] font-black text-[#002b5c] uppercase ml-6 tracking-widest opacity-70">E-mail Institucional</label>
-              <input required type="email" placeholder="nome@escola.com.br" value={email} onChange={e => setEmail(e.target.value)} className="w-full h-12 px-6 bg-gray-50 border border-gray-100 rounded-full text-xs font-bold text-[#002b5c] outline-none focus:ring-2 focus:ring-teal-500 transition-all lowercase" />
-            </div>
+              <button type="submit" disabled={isLoading} className="w-full h-14 bg-gradient-to-b from-[#66bb6a] to-[#43a047] text-white rounded-[12px] font-bold text-lg shadow-lg transition-all active:scale-95 disabled:opacity-50 mt-4">
+                {isLoading ? 'Cadastrando...' : 'Criar Conta'}
+              </button>
 
-            {error && <div className="p-3 w-full bg-red-50 text-red-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-red-100 leading-tight">{error}</div>}
-            {message && <div className="p-3 w-full bg-teal-50 text-teal-600 rounded-[24px] text-[8.5px] font-black text-center uppercase border border-teal-100 leading-tight">{message}</div>}
+              <button type="button" onClick={() => { setAuthMode('login'); setError(''); setMessage(''); }} className="text-[13px] font-medium text-white/70 hover:text-white transition-colors">
+                Voltar para o Login
+              </button>
+            </form>
+          )}
 
-            <button type="submit" disabled={isLoading} className="w-full h-14 bg-gradient-to-r from-orange-400 to-orange-700 hover:scale-[1.02] text-white rounded-full font-black text-[10px] uppercase tracking-[0.25em] shadow-xl transition-all active:scale-95 disabled:opacity-50 mt-4">
-              {isLoading ? 'ENVIANDO...' : 'ENVIAR INSTRUÇÕES'}
-            </button>
+          {authMode === 'forgot' && (
+            <form onSubmit={handleResetPassword} className="w-full space-y-6 flex flex-col items-center animate-fade-in">
+              <p className="text-[13px] font-medium text-white/70 text-center px-4">Insira seu e-mail para receber as instruções.</p>
+              <div className="w-full space-y-2">
+                <label className="text-[13px] font-medium text-white/90 px-1">E-mail Institucional</label>
+                <input required type="email" placeholder="nome@escola.com.br" value={email} onChange={e => setEmail(e.target.value)} className="w-full h-12 px-4 bg-white/10 border border-white/20 rounded-[8px] text-white placeholder-white/40 outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+              </div>
 
-            <button type="button" onClick={() => { setAuthMode('login'); setError(''); setMessage(''); }} className="mt-4 text-[9px] font-black text-gray-400 uppercase tracking-widest hover:text-[#002b5c] transition-colors">
-              Lembrei a senha! <span className="text-teal-600">Voltar</span>
-            </button>
-          </form>
-        )}
+              {error && <div className="p-3 w-full bg-red-500/20 text-red-100 rounded-[8px] text-xs font-medium text-center border border-red-500/30">{error}</div>}
+              {message && <div className="p-3 w-full bg-blue-500/20 text-blue-100 rounded-[8px] text-xs font-medium text-center border border-blue-500/30">{message}</div>}
 
-        <div className="mt-8 text-center w-full">
-          <p className="text-[8px] font-bold text-gray-300 uppercase tracking-widest leading-relaxed">
-            ESTE PORTAL É DE USO EXCLUSIVO DA CONTA DEMO<br />PLATAFORMA ESCOLAR PRO
-          </p>
+              <button type="submit" disabled={isLoading} className="w-full h-14 bg-gradient-to-b from-[#ffa726] to-[#f57c00] text-white rounded-[12px] font-bold text-lg shadow-lg transition-all active:scale-95 disabled:opacity-50 mt-4">
+                {isLoading ? 'Enviando...' : 'Enviar Instruções'}
+              </button>
+
+              <button type="button" onClick={() => { setAuthMode('login'); setError(''); setMessage(''); }} className="text-[13px] font-medium text-white/70 hover:text-white transition-colors">
+                Lembrei a senha
+              </button>
+            </form>
+          )}
+
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-50 w-full text-center">
-          <p className="text-[9px] font-bold text-gray-200 uppercase tracking-widest">SECRETARIA DA EDUCAÇÃO DO ESTADO DE SÃO PAULO</p>
+        <div className="mt-12 flex flex-col items-center w-full">
+          <div className="h-[1px] w-full bg-white/10 mb-4"></div>
+          <p className="text-white/60 text-[11px] tracking-wide">
+            &copy; 2024 - Todos os direitos reservados.
+          </p>
         </div>
       </div>
 
       <style>{`
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .animate-shake { animation: shake 0.2s ease-in-out forwards; }
       `}</style>
     </div>
   );
