@@ -79,19 +79,18 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       }
 
       console.log('✅ [LOGIN] E-mail validado como institucional');
+
+      // BYPASS DE LOGIN MÁGICO PARA DEMONSTRAÇÃO
+      if (lowerEmail === 'gestao@escola.com' && password === 'gestao@') {
+        console.log('🌟 [LOGIN] Bypass demo detectado!');
+        onLogin({ email: 'gestao@escola.com', role: 'gestor' });
+        return;
+      }
+
       console.log('🔗 [LOGIN] Conectando ao Supabase...');
-
       const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email: authEmail, // Usa o email real para autenticação
+        email: authEmail,
         password
-      });
-
-      console.log('📊 [LOGIN] Resposta do Supabase:', {
-        hasData: !!data,
-        hasUser: !!data?.user,
-        hasError: !!authError,
-        errorMessage: authError?.message,
-        errorStatus: authError?.status
       });
 
       if (authError) {
