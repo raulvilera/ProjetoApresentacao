@@ -15,4 +15,4 @@ export const isProfessorRegistered = (email: string): boolean => {
 export const getProfessorNameFromEmail = (email: string) => {
     const prof = PROFESSORS_DB.find(p => p.email.toLowerCase() === email.toLowerCase());
     return prof ? prof.nome : '';
-
+};
