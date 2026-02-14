@@ -268,7 +268,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               GESTÃO <span className="text-blue-400">PRO</span>
             </h2>
             <p className="text-[11px] text-blue-100/90 font-medium mt-3 text-center leading-relaxed max-w-[280px]">
-              sua plataforma de gestão totalmente integrada
+              A sua plataforma de gestão totalmente integrada
             </p>
           </div>
 
