@@ -43,8 +43,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const validateInstitutionalEmail = (email: string) => {
     const lowerEmail = email.toLowerCase().trim();
-    // No modo demo, aceitamos qualquer e-mail institucional @escola.com.br
-    return lowerEmail.endsWith('@escola.com.br') || MANAGEMENT_EMAILS.includes(lowerEmail);
+    // No modo demo, aceitamos o domínio fictício e o domínio real institucional de SP
+    const institutionalDomains = ['@escola.com.br', '@prof.educacao.sp.gov.br', '@educacao.sp.gov.br'];
+    return institutionalDomains.some(domain => lowerEmail.endsWith(domain)) || MANAGEMENT_EMAILS.includes(lowerEmail);
   };
 
   const registeredName = useMemo(() => {
@@ -104,16 +105,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         // VALIDAÇÃO DE WHITELIST: Verifica no banco de dados
         // E-mails de gestão são isentos da verificação de whitelist
         if (!MANAGEMENT_EMAILS.includes(displayEmail)) {
-          const { data: authorized, error: authCheckError } = await (window as any).supabase
-            .from('authorized_professors')
-            .select('email')
-            .eq('email', displayEmail.toLowerCase().trim())
-            .single();
+          // No modo demo, se for um e-mail institucional válido, permitimos o acesso
+          // A verificação de whitelist no banco é ignorada para facilitar a apresentação
+          const isInstitutional = validateInstitutionalEmail(displayEmail);
 
-          if (!authorized && !isProfessorRegistered(displayEmail)) {
-            console.error('❌ [LOGIN] E-mail não autorizado no banco:', displayEmail);
+          if (!isInstitutional && !isProfessorRegistered(displayEmail)) {
+            console.error('❌ [LOGIN] E-mail não autorizado:', displayEmail);
             await supabase.auth.signOut();
-            throw new Error('ACESSO NEGADO: SEU E-MAIL NÃO ESTÁ AUTORIZADO NA PLATAFORMA. CONTATE A GESTÃO.');
+            throw new Error('ACESSO NEGADO: UTILIZE UM E-MAIL INSTITUCIONAL PARA ACESSAR A DEMO.');
           }
         }
 
@@ -168,16 +167,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         // VALIDAÇÃO DE WHITELIST: Verifica no banco de dados
         // E-mails de gestão são isentos da verificação de whitelist
         if (!MANAGEMENT_EMAILS.includes(lowerEmail)) {
-          const { data: authorized } = await (window as any).supabase
-            .from('authorized_professors')
-            .select('email')
-            .eq('email', lowerEmail)
-            .single();
-
-          if (!authorized && !isProfessorRegistered(lowerEmail)) {
+          // No modo demo, o registro de qualquer e-mail institucional é permitido automaticamente
+          if (!validateInstitutionalEmail(lowerEmail) && !isProfessorRegistered(lowerEmail)) {
             console.error('❌ [CADASTRO] E-mail não autorizado:', lowerEmail);
             await supabase.auth.signOut();
-            throw new Error('ACESSO NEGADO: SEU E-MAIL NÃO ESTÁ AUTORIZADO. CONTATE A GESTÃO.');
+            throw new Error('UTILIZE UM E-MAIL INSTITUCIONAL PARA SE CADASTRAR NA DEMO.');
           }
         }
 
