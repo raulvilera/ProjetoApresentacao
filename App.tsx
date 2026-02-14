@@ -368,7 +368,7 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="h-screen w-full bg-[#1e3a8a] flex flex-col items-center justify-center">
+      <div className="h-screen w-full bg-gradient-to-br from-[#2c3e50] via-[#4a5568] to-[#1e3a8a] flex flex-col items-center justify-center">
         <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
         <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">Carregando GESTÃO PRO...</p>
       </div>
@@ -424,7 +424,7 @@ const App: React.FC = () => {
   const shouldShowGestorView = hasDualAccess ? viewMode === 'gestor' : user?.role === 'gestor';
 
   return (
-    <div className="relative min-h-screen bg-[#1e3a8a]">
+    <div className="relative min-h-screen bg-gradient-to-br from-[#2c3e50] via-[#4a5568] to-[#1e3a8a]">
       {/* Botão de alternância para usuários com acesso dual */}
       {hasDualAccess && (
         <button

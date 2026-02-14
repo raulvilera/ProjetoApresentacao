@@ -229,7 +229,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
   }, [incidents, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-[#1e3a8a] font-sans pb-12 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#2c3e50] via-[#4a5568] to-[#1e3a8a] font-sans pb-12 overflow-x-hidden">
       <header className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
         <div className="flex flex-col items-center sm:items-start">
           <h1 className="text-sm font-black uppercase text-blue-300">GESTÃO PRO</h1>
