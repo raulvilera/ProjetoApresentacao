@@ -182,7 +182,20 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
   const fetchProfessors = async () => {
     setIsManagingProfs(true);
     const { data, error } = await supabase.from('authorized_professors').select('email, nome').order('nome');
-    if (data) setProfessorsList(data);
+    if (data) {
+      // Anonimização para modo demonstração
+      const isDemoAccess = user.email.toLowerCase() === 'gestao@escola.com' || user.email.toLowerCase() === 'gestor@escola.com.br';
+
+      if (isDemoAccess) {
+        const anonymized = data.map((p, index) => ({
+          ...p,
+          nome: `PROFESSOR DEMO ${(index + 1).toString().padStart(2, '0')}`
+        }));
+        setProfessorsList(anonymized);
+      } else {
+        setProfessorsList(data);
+      }
+    }
     setIsManagingProfs(false);
   };
 
@@ -663,16 +676,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
       {showProfessorsModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in shadow-2xl">
           <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-[40px] overflow-hidden flex flex-col border border-white/20">
-            <div className="bg-[#0d47a1] p-6 text-center shrink-0 border-b-4 border-blue-500">
+            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] p-6 text-center shrink-0 border-b border-white/10 shadow-xl">
               <h3 className="text-white font-black text-xs uppercase tracking-[0.2em]">Gerenciar Professores Autorizados</h3>
-              <p className="text-blue-400 text-[9px] font-bold mt-1 uppercase">Controle de Acesso à Plataforma</p>
+              <p className="text-blue-300 text-[9px] font-bold mt-1 uppercase tracking-widest">Controle de Acesso à Plataforma</p>
             </div>
 
-            <div className="p-8 flex-1 overflow-y-auto custom-scrollbar flex flex-col lg:flex-row gap-8">
+            <div className="p-8 flex-1 overflow-y-auto custom-scrollbar flex flex-col lg:flex-row gap-8 bg-gradient-to-b from-[#1e3a8a] via-[#0d47a1] to-black">
+
               {/* Formulário lateral */}
               <div className="lg:w-1/3 space-y-6 shrink-0">
-                <form onSubmit={handleAddProfessor} className="p-6 bg-gray-50 rounded-[32px] border border-gray-100 space-y-4">
-                  <h4 className="text-[10px] font-black text-[#002b5c] uppercase text-center mb-2">Novo Professor</h4>
+                <form onSubmit={handleAddProfessor} className="p-6 bg-white/10 backdrop-blur-md rounded-[32px] border border-white/10 space-y-4 shadow-xl">
+                  <h4 className="text-[10px] font-black text-blue-300 uppercase text-center mb-2 tracking-widest">Novo Professor</h4>
+
                   <div className="space-y-1">
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest block ml-2">E-mail</label>
                     <input
@@ -704,11 +719,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                   </button>
                 </form>
 
-                <div className="p-4 bg-orange-50 border border-orange-100 rounded-2xl">
-                  <p className="text-[8px] font-bold text-orange-700 uppercase leading-relaxed">
+                <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl backdrop-blur-sm">
+                  <p className="text-[8px] font-bold text-orange-400 uppercase leading-relaxed tracking-wider">
                     ⚠️ Somente professores cadastrados nesta lista poderão criar contas ou fazer login no portal.
                   </p>
                 </div>
+
               </div>
 
               {/* Lista Principal */}
@@ -716,28 +732,29 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                 <div className="flex justify-between items-center mb-4 px-2">
                   <p className="text-[10px] font-black text-gray-400 uppercase">{professorsList.length} Professores Cadastrados</p>
                 </div>
-                <div className="flex-1 bg-gray-50 rounded-[32px] border border-gray-100 overflow-hidden flex flex-col">
+                <div className="flex-1 bg-white/5 backdrop-blur-md rounded-[32px] border border-white/10 overflow-hidden flex flex-col shadow-2xl">
                   <div className="overflow-y-auto custom-scrollbar flex-1">
                     <table className="w-full text-left text-[10px]">
-                      <thead className="bg-[#f8fafc] border-b text-black sticky top-0">
+                      <thead className="bg-black/20 border-b border-white/10 text-blue-300 sticky top-0 z-10">
                         <tr>
                           <th className="p-4 font-black uppercase tracking-widest">Professor</th>
                           <th className="p-4 font-black uppercase tracking-widest text-center">Ação</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-100 bg-white">
+                      <tbody className="divide-y divide-white/5 bg-transparent">
+
                         {professorsList.map(prof => (
-                          <tr key={prof.email} className="hover:bg-blue-50/40 transition-all">
+                          <tr key={prof.email} className="hover:bg-white/5 transition-all group">
                             <td className="p-4">
                               <div className="flex flex-col">
-                                <span className="font-black text-[#002b5c] uppercase">{prof.nome}</span>
-                                <span className="text-[9px] font-bold text-gray-400 tracking-tight">{prof.email}</span>
+                                <span className="font-black text-white uppercase group-hover:text-blue-300 transition-colors">{prof.nome}</span>
+                                <span className="text-[9px] font-bold text-white/40 tracking-tight">{prof.email}</span>
                               </div>
                             </td>
                             <td className="p-4 text-center">
                               <button
                                 onClick={() => handleRemoveProfessor(prof.email)}
-                                className="p-2.5 bg-red-50 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-90"
+                                className="p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-lg active:scale-90 border border-red-500/20"
                               >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                               </button>
@@ -748,6 +765,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
                     </table>
                   </div>
                 </div>
+
               </div>
             </div>
 
