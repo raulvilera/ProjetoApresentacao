@@ -35,7 +35,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   // E-mails de gestão permitidos para demonstração
   const MANAGEMENT_EMAILS = [
-    'gestor@escola.com.br',
     'gestao@escola.com'
   ];
 
@@ -71,14 +70,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       console.log('🔐 [LOGIN] Tentando login com:', lowerEmail);
 
       // BYPASS TOTAL PARA DEMONSTRAÇÃO (REFORÇADO)
-      const isDemoEmail = lowerEmail === 'gestao@escola.com' || lowerEmail === 'gestao@escola.com.br';
       const isDemoPassword = cleanPassword === 'gestao@' || cleanPassword === 'gestao';
+      const isGestaoDemo = lowerEmail === 'gestao@escola.com';
+      const isProfDemo = lowerEmail === 'professor@escola.com';
 
-      if (isDemoEmail && isDemoPassword) {
+      if ((isGestaoDemo || isProfDemo) && isDemoPassword) {
         console.log('🌟 [LOGIN] Bypass demo detectado! Liberando acesso...');
         onLogin({
-          email: 'gestao@escola.com',
-          role: 'gestor'
+          email: lowerEmail,
+          role: isGestaoDemo ? 'gestor' : 'professor'
         });
         return;
       }

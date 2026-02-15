@@ -2,8 +2,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Configurações fornecidas pelo usuário para o projeto Plataforma Pro
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://zvuxzrfbmmbhuhwaofrn.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2dXh6cmZibW1iaHVod2FvZnJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2ODkxNDEsImV4cCI6MjA4MjI2NTE0MX0.GpA8qLVeLF01x0baSALC1AmRTcKL90ALpxt35qKLVTQ';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wniqdwivddbxniybemhz.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_RTpfp7C0Wn6nnGQq7AYLOg_eRn5IFEe';
 
 export const isSupabaseConfigured = true;
 

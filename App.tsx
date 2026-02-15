@@ -13,12 +13,11 @@ import { isProfessorRegistered } from './professorsData';
 
 // E-mails de gestão permitidos para demonstração
 const MANAGEMENT_EMAILS = [
-  'gestor@escola.com.br',
   'gestao@escola.com'
 ];
 
 // E-mail com acesso dual (gestor + professor) para demonstração
-const DUAL_ACCESS_EMAIL = 'gestor@escola.com.br';
+const DUAL_ACCESS_EMAIL = 'gestao@escola.com';
 
 type View = 'login' | 'dashboard' | 'resetPassword';
 type ViewMode = 'gestor' | 'professor';

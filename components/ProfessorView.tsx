@@ -213,7 +213,7 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
       <header className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
         <div className="flex flex-col items-center sm:items-start">
           <h1 className="text-sm font-black uppercase text-blue-300">GESTÃO PRO</h1>
-          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Área do Professor</p>
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">EQUIPE GESTORA</p>
         </div>
         <div className="flex gap-4 sm:gap-6 items-center">
           <span className="text-[10px] font-bold text-white/70">{user.email}</span>

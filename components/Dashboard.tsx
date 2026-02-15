@@ -4,6 +4,7 @@ import { Incident, User, Student } from '../types';
 import { generateIncidentPDF, uploadPDFToStorage } from '../services/pdfService';
 import StatusBadge from './StatusBadge';
 import { supabase } from '../services/supabaseClient';
+import { DEMO_PROFESSORS_LIST } from '../professorsData';
 
 interface DashboardProps {
   user: User;
@@ -181,21 +182,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
 
   const fetchProfessors = async () => {
     setIsManagingProfs(true);
-    const { data, error } = await supabase.from('authorized_professors').select('email, nome').order('nome');
-    if (data) {
-      // Anonimização para modo demonstração
-      const isDemoAccess = user.email.toLowerCase() === 'gestao@escola.com' || user.email.toLowerCase() === 'gestor@escola.com.br';
-
-      if (isDemoAccess) {
-        const anonymized = data.map((p, index) => ({
-          ...p,
-          nome: `PROFESSOR DEMO ${(index + 1).toString().padStart(2, '0')}`
-        }));
-        setProfessorsList(anonymized);
-      } else {
-        setProfessorsList(data);
-      }
-    }
+    // Para modo demonstração/apresentação, usamos a lista fixa de professores fictícios
+    // Isso evita mostrar dados reais de professores cadastrados no Supabase
+    setProfessorsList(DEMO_PROFESSORS_LIST);
     setIsManagingProfs(false);
   };
 
@@ -203,33 +192,17 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
     e.preventDefault();
     if (!newProfEmail || !newProfNome) return;
 
-    setIsManagingProfs(true);
-    const { error } = await supabase.from('authorized_professors').insert([
-      { email: newProfEmail.toLowerCase().trim(), nome: newProfNome.toUpperCase().trim() }
-    ]);
-
-    if (error) {
-      alert("Erro ao adicionar professor: " + error.message);
-    } else {
-      setNewProfEmail('');
-      setNewProfNome('');
-      await fetchProfessors();
-    }
-    setIsManagingProfs(false);
+    // Apenas simulação local para a demo
+    setProfessorsList(prev => [...prev, { email: newProfEmail.toLowerCase().trim(), nome: newProfNome.toUpperCase().trim() }]);
+    setNewProfEmail('');
+    setNewProfNome('');
   };
 
   const handleRemoveProfessor = async (email: string) => {
     if (!confirm(`Deseja remover o acesso de ${email}?`)) return;
 
-    setIsManagingProfs(true);
-    const { error } = await supabase.from('authorized_professors').delete().eq('email', email);
-
-    if (error) {
-      alert("Erro ao remover: " + error.message);
-    } else {
-      await fetchProfessors();
-    }
-    setIsManagingProfs(false);
+    // Apenas simulação local para a demo
+    setProfessorsList(prev => prev.filter(p => p.email !== email));
   };
 
   const history = useMemo(() => {
@@ -246,7 +219,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
       <header className="bg-gradient-to-r from-[#1e3a8a] to-[#0d47a1] text-white px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center sticky top-0 z-50 shadow-2xl gap-4 sm:gap-0 border-b border-white/10">
         <div className="flex flex-col items-center sm:items-start">
           <h1 className="text-sm font-black uppercase text-blue-300">GESTÃO PRO</h1>
-          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Painel Administrativo</p>
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">EQUIPE GESTORA</p>
         </div>
         <div className="flex gap-4 sm:gap-6 items-center">
           <span className="text-[10px] font-bold text-white/70">{user.email}</span>
@@ -769,10 +742,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
               </div>
             </div>
 
-            <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-center shrink-0">
+            <div className="p-6 bg-black/40 backdrop-blur-md border-t border-white/10 flex justify-center shrink-0">
               <button
                 onClick={() => setShowProfessorsModal(false)}
-                className="px-12 py-4 bg-[#002b5c] text-white font-black text-[10px] uppercase rounded-full hover:shadow-xl transition-all active:scale-95"
+                className="px-12 py-4 bg-white/10 hover:bg-white/20 text-white font-black text-[10px] uppercase rounded-full border border-white/20 hover:shadow-xl transition-all active:scale-95"
               >
                 Fechar Painel
               </button>

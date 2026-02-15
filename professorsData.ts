@@ -1,7 +1,19 @@
 export const PROFESSORS_DB = [
-    { email: 'professor@escola.com.br', nome: 'PROFESSOR DEMO' },
-    { email: 'gestor@escola.com.br', nome: 'GESTOR DEMO' },
-    { email: 'vilera@prof.educacao.sp.gov.br', nome: 'RAUL VILERA' }
+    { email: 'professor@escola.com', nome: 'PROFESSOR DEMO' },
+    { email: 'gestao@escola.com', nome: 'GESTOR DEMO' },
+];
+
+export const DEMO_PROFESSORS_LIST = [
+    { email: 'ana.silva@escola.demo.com', nome: 'ANA SILVA' },
+    { email: 'bruno.oliveira@escola.demo.com', nome: 'BRUNO OLIVEIRA' },
+    { email: 'carla.santos@escola.demo.com', nome: 'CARLA SANTOS' },
+    { email: 'diego.lima@escola.demo.com', nome: 'DIEGO LIMA' },
+    { email: 'elena.pereira@escola.demo.com', nome: 'ELENA PEREIRA' },
+    { email: 'fabio.rodrigues@escola.demo.com', nome: 'FÁBIO RODRIGUES' },
+    { email: 'giselle.costa@escola.demo.com', nome: 'GISELLE COSTA' },
+    { email: 'helio.souza@escola.demo.com', nome: 'HÉLIO SOUZA' },
+    { email: 'iris.melo@escola.demo.com', nome: 'ÍRIS MELO' },
+    { email: 'joao.almeida@escola.demo.com', nome: 'JOÃO ALMEIDA' }
 ];
 
 export const isProfessorRegistered = (email: string): boolean => {
