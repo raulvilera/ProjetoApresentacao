@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        includeAssets: ['favicon.ico'],
         manifest: {
           name: 'GESTÃO PRO - Plataforma Escolar',
           short_name: 'GestãoPro',
