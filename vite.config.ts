@@ -30,6 +30,8 @@ export default defineConfig(({ mode }) => {
           short_name: 'GestãoPro',
           description: 'Plataforma de Gestão Escolar e Acadêmica',
           theme_color: '#1e3a8a',
+          background_color: '#1e3a8a',
+          display: 'standalone',
           icons: [
             {
               src: 'pwa-192x192.png',
