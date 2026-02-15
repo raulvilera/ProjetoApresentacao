@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [classes, setClasses] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // Estado para controlar visualização (gestor/professor) para usuários com acesso dual
   const [viewMode, setViewMode] = useState<ViewMode>('gestor');
@@ -175,6 +176,7 @@ const App: React.FC = () => {
 
   const loadCloudIncidents = async () => {
     if (!isSupabaseConfigured || !supabase) return;
+    setIsSyncing(true);
     try {
       const { data: incData, error } = await supabase
         .from('incidents')
@@ -206,7 +208,11 @@ const App: React.FC = () => {
         setIncidents(mapped);
         localStorage.setItem('PEP_incidents_cache', JSON.stringify(mapped));
       }
-    } catch (e) { console.warn("Sincronização offline."); }
+    } catch (e) {
+      console.warn("Sincronização offline.");
+    } finally {
+      setIsSyncing(false);
+    }
   };
 
   const handleSaveIncident = async (newIncident: Incident | Incident[]) => {
@@ -417,7 +423,9 @@ const App: React.FC = () => {
     onUpdateIncident: handleUpdateIncident,
     onLogout: handleLogout,
     onOpenSearch: () => setSearchModalOpen(true),
-    onSyncStudents: handleSyncStudents
+    onSyncStudents: handleSyncStudents,
+    onRefresh: loadCloudIncidents,
+    isSyncing
   };
 
   // Determina qual visualização renderizar

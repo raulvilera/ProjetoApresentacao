@@ -17,9 +17,14 @@ interface DashboardProps {
   onOpenSearch: () => void;
   onUpdateIncident?: (incident: Incident) => void;
   onSyncStudents?: () => Promise<void>;
+  onRefresh?: () => void;
+  isSyncing?: boolean;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classes, onSave, onDelete, onLogout, onOpenSearch, onUpdateIncident, onSyncStudents }) => {
+const Dashboard: React.FC<DashboardProps> = ({
+  user, incidents, students, classes, onSave, onDelete, onLogout, onOpenSearch, onUpdateIncident, onSyncStudents,
+  onRefresh, isSyncing
+}) => {
   const [classRoom, setClassRoom] = useState('');
   const [studentName, setStudentName] = useState('');
   const [professorName, setProfessorName] = useState('');
@@ -229,7 +234,17 @@ const Dashboard: React.FC<DashboardProps> = ({ user, incidents, students, classe
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 sm:py-2 rounded-xl text-[9px] sm:text-[10px] font-black uppercase shadow-lg transition-all active:scale-95 flex items-center gap-2 border border-white/20"
           >
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" /></svg>
-            Professores
+            Professors
+          </button>
+          <button
+            onClick={onRefresh}
+            disabled={isSyncing}
+            className={`bg-white/10 hover:bg-white/20 text-white p-2 rounded-xl border border-white/20 transition-all ${isSyncing ? 'animate-pulse opacity-50' : 'active:scale-90'}`}
+            title="Sincronizar com o Banco de Dados"
+          >
+            <svg className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
           </button>
         </div>
       </header>

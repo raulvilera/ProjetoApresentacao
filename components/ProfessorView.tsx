@@ -15,6 +15,8 @@ interface ProfessorViewProps {
   onDelete: (id: string) => void;
   onLogout: () => void;
   onSyncStudents?: () => Promise<void>;
+  onRefresh?: () => void;
+  isSyncing?: boolean;
 }
 
 const LISTA_IRREGULARIDADES = [
@@ -22,7 +24,10 @@ const LISTA_IRREGULARIDADES = [
   'INDISCIPLINA', 'DESACATO', 'SEM TAREFA', 'SAIU SEM PERMISSÃO'
 ];
 
-const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students, classes, onSave, onDelete, onLogout, onSyncStudents }) => {
+const ProfessorView: React.FC<ProfessorViewProps> = ({
+  user, incidents, students, classes, onSave, onDelete, onLogout, onSyncStudents,
+  onRefresh, isSyncing
+}) => {
   const [professorName, setProfessorName] = useState('');
   const [classRoom, setClassRoom] = useState('');
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
@@ -218,6 +223,16 @@ const ProfessorView: React.FC<ProfessorViewProps> = ({ user, incidents, students
         <div className="flex gap-4 sm:gap-6 items-center">
           <span className="text-[10px] font-bold text-white/70">{user.email}</span>
           <button onClick={onLogout} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-1.5 rounded-xl text-[10px] font-black uppercase shadow-lg transition-all">Sair</button>
+          <button
+            onClick={onRefresh}
+            disabled={isSyncing}
+            className={`bg-white/10 hover:bg-white/20 text-white p-2 rounded-xl border border-white/20 transition-all ${isSyncing ? 'animate-pulse opacity-50' : 'active:scale-90'}`}
+            title="Sincronizar com o Banco de Dados"
+          >
+            <svg className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
         </div>
       </header>
 
