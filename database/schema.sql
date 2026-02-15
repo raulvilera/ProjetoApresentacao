@@ -70,9 +70,14 @@ CREATE POLICY "Allow delete for author or gestor" ON public.incidents
         EXISTS (SELECT 1 FROM authorized_professors WHERE lower(email) = lower(auth.jwt() ->> 'email') AND role = 'gestor')
     );
 
--- Garantir permissões para usuários autenticados e anônimos
+-- Garantir permissões básicas para o funcionamento da API
 GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
-GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated, service_role;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
+
+-- Dar acesso às tabelas para usuários LOGADOS (authenticated)
+-- A segurança real é feita linha a linha pelas políticas de RLS acima
+GRANT ALL ON ALL TABLES IN SCHEMA public TO authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO authenticated, service_role;
+
+-- Negar acesso a tabelas para usuários NÃO LOGADOS (anon) por segurança
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO authenticated, service_role;
