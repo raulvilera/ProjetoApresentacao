@@ -1,11 +1,11 @@
 -- Esquema do Banco de Dados - Plataforma Escolar
--- Última atualização: 2026-02-15 (Fix: Alteração do tipo de ID de UUID para TEXT)
+-- Última atualização: 2026-02-15 19:00 (Fix: RLS Case Insensitive & NULL constraints)
 
 -- Tabela de Incidências (Ocorrências)
 CREATE TABLE public.incidents (
     id text PRIMARY KEY,
     student_name text,
-    student_class text,
+    student_class text, -- Mapped to classRoom in frontend
     date date DEFAULT CURRENT_DATE,
     period text,
     type text,
@@ -53,18 +53,23 @@ CREATE POLICY "Allow authenticated select" ON public.incidents
     FOR SELECT TO authenticated USING (true);
 
 CREATE POLICY "Allow authenticated insert" ON public.incidents
-    FOR INSERT TO authenticated WITH CHECK ((auth.jwt() ->> 'email'::text) = author_email);
+    FOR INSERT TO authenticated WITH CHECK (lower(auth.jwt() ->> 'email') = lower(author_email));
 
 CREATE POLICY "Allow update for author or gestor" ON public.incidents
     FOR UPDATE TO authenticated
     USING (
-        ((auth.jwt() ->> 'email'::text) = author_email) OR 
-        (EXISTS (SELECT 1 FROM authorized_professors WHERE email = (auth.jwt() ->> 'email'::text) AND role = 'gestor'))
+        lower(auth.jwt() ->> 'email') = lower(author_email) OR 
+        EXISTS (SELECT 1 FROM authorized_professors WHERE lower(email) = lower(auth.jwt() ->> 'email') AND role = 'gestor')
     );
 
 CREATE POLICY "Allow delete for author or gestor" ON public.incidents
     FOR DELETE TO authenticated
     USING (
-        ((auth.jwt() ->> 'email'::text) = author_email) OR 
-        (EXISTS (SELECT 1 FROM authorized_professors WHERE email = (auth.jwt() ->> 'email'::text) AND role = 'gestor'))
+        lower(auth.jwt() ->> 'email') = lower(author_email) OR 
+        EXISTS (SELECT 1 FROM authorized_professors WHERE lower(email) = lower(auth.jwt() ->> 'email') AND role = 'gestor')
     );
+
+-- Garantir permissões para usuários autenticados
+GRANT ALL ON public.incidents TO authenticated;
+GRANT ALL ON public.authorized_professors TO authenticated;
+GRANT ALL ON public.students TO authenticated;
