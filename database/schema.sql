@@ -1,11 +1,12 @@
 -- Esquema do Banco de Dados - Plataforma Escolar
--- Última atualização: 2026-02-15 19:00 (Fix: RLS Case Insensitive & NULL constraints)
+-- Última atualização: 2026-02-15 19:05 (Fix: Missing professor_name column)
 
 -- Tabela de Incidências (Ocorrências)
 CREATE TABLE public.incidents (
     id text PRIMARY KEY,
     student_name text,
     student_class text, -- Mapped to classRoom in frontend
+    professor_name text,
     date date DEFAULT CURRENT_DATE,
     period text,
     type text,
