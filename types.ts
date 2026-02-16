@@ -33,6 +33,7 @@ export interface Incident {
   authorEmail?: string; // E-mail do autor do registro para controle de exclusão
   managementFeedback?: string;
   lastViewedAt?: string;
+  created_at?: string;
 }
 
 export type View = 'login' | 'dashboard';

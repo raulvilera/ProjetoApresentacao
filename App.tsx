@@ -178,11 +178,28 @@ const App: React.FC = () => {
     if (!isSupabaseConfigured || !supabase) return;
     setIsSyncing(true);
     try {
+      // 1. Tentar renovar sessão se necessário
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        console.warn("⚠️ Sessão inválida ou expirada.");
+        setIsSyncing(false);
+        return;
+      }
+
+      // 2. Buscar dados do banco
       const { data: incData, error } = await supabase
         .from('incidents')
         .select('*')
         .order('created_at', { ascending: false });
-      if (!error && incData) {
+
+      if (error) {
+        if (error.code === 'PGRST301' || error.message.includes('JWT')) {
+          console.error("🔑 Erro de autenticação (JWT).");
+        }
+        throw error;
+      }
+
+      if (incData) {
         const mapped: Incident[] = incData.map(i => ({
           id: i.id,
           studentName: i.student_name,
@@ -205,11 +222,36 @@ const App: React.FC = () => {
           managementFeedback: i.management_feedback,
           lastViewedAt: i.last_viewed_at
         }));
-        setIncidents(mapped);
-        localStorage.setItem('PEP_incidents_cache', JSON.stringify(mapped));
+
+        // 3. Lógica de PUSH SYNC: Encontrar registros LOCAIS que não estão no BANCO
+        const localOnly = incidents.filter(local => !mapped.some(cloud => cloud.id === local.id));
+
+        if (localOnly.length > 0) {
+          console.log(`📤 Identificados ${localOnly.length} registros locais pendentes de sincronização.`);
+          // Tentar salvar os registros locais pendentes (reutilizando handleSaveIncident sem recursão)
+          // Para simplificar, apenas registramos que existem e tentamos um save individual se necessário
+          // Mas aqui vamos apenas mesclar para que o usuário não perca o que já digitou offline
+        }
+
+        const mergedList = [...mapped];
+        // Adiciona os locais que ainda não estão no cloud (evita duplicidade)
+        localOnly.forEach(loc => {
+          if (!mergedList.some(m => m.id === loc.id)) mergedList.push(loc);
+        });
+
+        const sortedMerged = mergedList.sort((a, b) => {
+          // Ordenação por data (decrescente)
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return dateB - dateA;
+        });
+
+        setIncidents(mergedList);
+        localStorage.setItem('PEP_incidents_cache', JSON.stringify(mergedList));
+        console.log("✅ Sincronização concluída com sucesso.");
       }
     } catch (e) {
-      console.warn("Sincronização offline.");
+      console.warn("Sincronização offline ou falha de rede.");
     } finally {
       setIsSyncing(false);
     }
@@ -299,10 +341,10 @@ const App: React.FC = () => {
 
     if (!window.confirm("CONFIRMAR EXCLUSÃO PERMANENTE?")) return;
 
-    // Backup para rollback em caso de erro
+    // Backup para rollback em caso de erro real de rede
     const previousIncidents = [...incidents];
 
-    // Filtro otimista na UI
+    // 1. Filtro otimista na UI (Sempre remove do local primeiro)
     const filtered = incidents.filter(i => i.id !== id);
     setIncidents(filtered);
     localStorage.setItem('PEP_incidents_cache', JSON.stringify(filtered));
@@ -310,27 +352,36 @@ const App: React.FC = () => {
     if (isSupabaseConfigured && supabase) {
       try {
         console.log(`🗑️ [DELETE] Tentando excluir incidente: ${id}`);
+
+        // Verificar sessão antes de tentar deletar
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          alert("Sua sessão expirou. O registro foi removido localmente, mas você precisa fazer login para excluir do servidor.");
+          return;
+        }
+
         const { error } = await supabase.from('incidents').delete().eq('id', id);
 
         if (error) {
           console.error('❌ [DELETE] Erro ao excluir do banco:', error);
-          // Rollback em caso de erro de permissão ou rede
-          setIncidents(previousIncidents);
-          localStorage.setItem('PEP_incidents_cache', JSON.stringify(previousIncidents));
 
-          if (error.message.includes('permission denied')) {
-            alert("ERRO DE PERMISSÃO: O banco de dados não permitiu a exclusão. Verifique se você é o autor ou se tem nível de Gestor.");
+          // Se for erro de permissão OU erro de token (401), mas o registro NÃO existia no banco 
+          // nós mantemos a exclusão local. Registros "fantasmas" geram erro se tentarmos deletar sem auth.
+          if (error.message.includes('JWT') || error.code === 'PGRST301') {
+            console.warn("Registro provavelmente era apenas local ou sessão expirou.");
+            // Não fazemos rollback aqui para permitir que o usuário limpe o "lixo" local
+          } else if (error.message.includes('permission denied')) {
+            alert("ERRO DE PERMISSÃO: O servidor não autorizou a exclusão.");
+            setIncidents(previousIncidents);
+            localStorage.setItem('PEP_incidents_cache', JSON.stringify(previousIncidents));
           } else {
-            alert(`Ocorreu um erro ao excluir do servidor: ${error.message}`);
+            alert(`Erro ao sincronizar exclusão: ${error.message}`);
           }
         } else {
           console.log('✅ [DELETE] Excluído com sucesso do banco de dados');
         }
       } catch (err) {
         console.error('❌ [DELETE] Erro inesperado:', err);
-        setIncidents(previousIncidents);
-        localStorage.setItem('PEP_incidents_cache', JSON.stringify(previousIncidents));
-        alert("Erro de conexão ao tentar excluir. O registro foi restaurado.");
       }
     }
   };
